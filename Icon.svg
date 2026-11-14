@@ -1,0 +1,7 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="110" fill="#090909"/>
+  <path d="M256 65 L405 150 V320 L256 405 L107 320 V150 Z" fill="#ff6a00"/>
+  <path d="M256 112 L365 175 V295 L256 358 L147 295 V175 Z" fill="#090909"/>
+  <text x="256" y="280" font-size="125" font-weight="900" text-anchor="middle" fill="#ff6a00" font-family="Arial">YD!</text>
+</svg>

@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080808">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Your Doc! | Ultimate Gaming Assistant</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:#eee;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 12px;background:#151515;border-bottom:2px solid #ff8500}
+h1{color:#ff8500;font-size:32px;margin:5px}
+header p{color:#aaa}
+main{max-width:850px;margin:auto;padding:12px}
+.panel{background:#151515;border:1px solid #333;border-radius:14px;padding:17px;margin:14px 0}
+h2{color:#ff9500}
+h3{color:#ffb34d}
+input,select{width:100%;padding:12px;margin:7px 0;background:#252525;color:white;border:1px solid #555;border-radius:8px}
+button{background:#ff8800;color:#111;font-weight:bold;border:0;padding:12px 15px;border-radius:8px;margin:5px 0;cursor:pointer}
+button:active{transform:scale(.98)}
+.output{background:#222;padding:13px;border-radius:9px;margin-top:12px;line-height:1.6;white-space:pre-wrap}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.tabs button{width:100%}
+.tool{display:none}
+.tool.active{display:block}
+.warning{background:#302000;border:1px solid #ff9800;border-left:5px solid #ff9800;padding:13px;border-radius:9px;margin:12px}
+small{color:#aaa}
+footer{text-align:center;padding:25px;color:#777}
+</style>
+</head>
+
+<body>
+<header>
+<h1>🐉 YOUR DOC!</h1>
+<p>Old Phone. Smart Optimization.</p>
+</header>
+
+<div class="warning">
+<strong>⚠️ DEVICE WARNING</strong>
+<p>Download optimization packages only if your phone can handle them. They may use extra storage and resources and can overload older devices. Personal experience notice by Your Doc!</p>
+</div>
+
+<main>
+<section class="panel">
+<h2>⚡ CONTROL CENTER</h2>
+<div class="tabs">
+<button onclick="openTool('scanner')">📱 Device Scanner</button>
+<button onclick="openTool('doctor')">🩺 Lag Doctor</button>
+<button onclick="openTool('ff')">🔥 FF Optimizer</button>
+<button onclick="openTool('rank')">🏆 BR Rank Arena</button>
+<button onclick="openTool('sensi')">🎯 Sensitivity Lab</button>
+<button onclick="openTool('database')">🧠 Old Phone Database</button>
+</div>
+</section>
+
+<!-- SCANNER -->
+<section id="scanner" class="panel tool active">
+<h2>📱 Device Scanner</h2>
+<button onclick="scanDevice()">SCAN DEVICE</button>
+<div id="scanOutput" class="output">Waiting for scan...</div>
+
+<h3>Save your phone specs</h3>
+<input id="phone" placeholder="Phone model">
+<input id="chip" placeholder="Chipset">
+<select id="ram">
+<option value="">RAM</option>
+<option>2 GB</option><option>3 GB</option>
+<option>4 GB</option><option>6 GB</option>
+<option>8 GB</option><option>12 GB</option>
+</select>
+<input id="storage" placeholder="Storage">
+<input id="android" placeholder="Android version">
+<button onclick="saveProfile()">SAVE DEVICE</button>
+<div id="profileOutput" class="output"></div>
+</section>
+
+<!-- LAG DOCTOR -->
+<section id="doctor" class="panel tool">
+<h2>🩺 LAG DOCTOR</h2>
+<select id="lagType">
+<option value="fps">Low FPS / FPS drops</option>
+<option value="heat">Heating</option>
+<option value="ping">Network lag</option>
+<option value="crash">Game crashes</option>
+<option value="storage">Low storage</option>
+<option value="all">All problems</option>
+</select>
+<select id="severity">
+<option value="mild">Mild problem</option>
+<option value="medium">Medium problem</option>
+<option value="severe">Severe problem</option>
+</select>
+<button onclick="diagnose()">DIAGNOSE</button>
+<div id="lagOutput" class="output">Your diagnosis appears here.</div>
+</section>
+
+<!-- FF OPTIMIZER -->
+<section id="ff" class="panel tool">
+<h2>🔥 FREE FIRE OPTIMIZER</h2>
+<select id="ffDevice">
+<option value="low">Low-end phone</option>
+<option value="mid">Mid-range phone</option>
+<option value="high">High-end phone</option>
+</select>
+<select id="ffPriority">
+<option value="fps">Maximum stable FPS</option>
+<option value="balanced">Balanced</option>
+<option value="visual">Visual quality</option>
+</select>
+<select id="ffHeat">
+<option value="yes">Heating issue</option>
+<option value="no">No major heating</option>
+</select>
+<button onclick="optimizeFF()">OPTIMIZE</button>
+<div id="ffOutput" class="output"></div>
+</section>
+
+<!-- BR RANK -->
+<section id="rank" class="panel tool">
+<h2>🏆 BR RANK ARENA</h2>
+<select id="rankDevice">
+<option value="low">Low-end device</option>
+<option value="mid">Mid-range device</option>
+<option value="high">High-end device</option>
+</select>
+<select id="rankProblem">
+<option value="fps">FPS drops during fights</option>
+<option value="ping">Ping spikes</option>
+<option value="heat">Heating</option>
+<option value="all">All problems</option>
+</select>
+<button onclick="rankSetup()">BUILD RANK PROFILE</button>
+<div id="rankOutput" class="output"></div>
+</section>
+
+<!-- SENSITIVITY -->
+<section id="sensi" class="panel tool">
+<h2>🎯 SENSITIVITY LAB</h2>
+<select id="sensiDevice">
+<option value="low">Low-end phone</option>
+<option value="mid">Mid-range phone</option>
+<option value="high">High-end phone</option>
+</select>
+<select id="sensiStyle">
+<option value="balanced">Balanced</option>
+<option value="drag">Drag headshots</option>
+<option value="steady">Steady aim</option>
+</select>
+<button onclick="makeSensi()">GENERATE SENSITIVITY</button>
+<div id="sensiOutput" class="output"></div>
+</section>
+
+<!-- DATABASE -->
+<section id="database" class="panel tool">
+<h2>🧠 OLD PHONE DATABASE</h2>
+<input id="searchPhone" placeholder="Search phone or chipset">
+<button onclick="searchDatabase()">SEARCH DATABASE</button>
+<div id="databaseOutput" class="output"></div>
+<p><small>Reference data only. RAM and storage configurations vary by model and region.</small></p>
+</section>
+
+<section class="panel">
+<h2>📲 INSTALL YOUR DOC!</h2>
+<button id="installBtn" onclick="installApp()" style="display:none">INSTALL APP</button>
+<div id="installOutput" class="output">Open this website in Chrome to check installation availability.</div>
+</section>
+
+<section class="panel">
+<h3>🔒 PRIVACY</h3>
+<p>Local rule-based assistant. No paid AI API, no advertisements and no device data uploads by this code.</p>
+</section>
+</main>
+
+<footer>YOUR DOC! | Unofficial gaming assistant</footer>
+
+<script>
+// NAVIGATION
+function openTool(id){
+ document.querySelectorAll('.tool').forEach(t=>t.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+}
+
+// DEVICE SCANNER
+function scanDevice(){
+ let ua=navigator.userAgent;
+ let cores=navigator.hardwareConcurrency||'Unavailable';
+ let memory=navigator.deviceMemory||'Not exposed';
+ let conn=navigator.connection?.effectiveType||'Unavailable';
+ document.getElementById('scanOutput').innerText=
+ 'BROWSER DEVICE REPORT\n\nUser agent: '+ua+
+ '\nLogical CPU cores: '+cores+
+ '\nApprox RAM hint: '+memory+
+ '\nScreen: '+screen.width+' x '+screen.height+
+ '\nNetwork: '+conn+
+ '\n\nExact chipset and actual free RAM are not accessible reliably from a normal website.';
+}
+
+// PROFILE MEMORY
+function saveProfile(){
+ let p={
+ model:document.getElementById('phone').value,
+ chip:document.getElementById('chip').value,
+ ram:document.getElementById('ram').value,
+ storage:document.getElementById('storage').value,
+ android:document.getElementById('android').value
+ };
+ if(!p.model){profileOutput.innerText='Enter phone model first.';return;}
+ localStorage.setItem('yourDocProfile',JSON.stringify(p));
+ profileOutput.innerText='PROFILE SAVED!\n'+p.model+'\n'+p.chip+'\n'+p.ram+' RAM\n'+p.storage+'\n'+p.android;
+}
+
+// LAG DOCTOR
+function diagnose(){
+ let type=lagType.value;
+ let sev=severity.value;
+ let advice={
+ fps:'Use lower graphics, close unused apps and check free storage. Compare FPS in the same game area.',
+ heat:'Take a break and let the phone cool naturally. Avoid charging while gaming.',
+ ping:'Check signal strength, pause downloads and compare Wi-Fi with mobile data.',
+ crash:'Check available storage, update the game and restart the phone. Clear cache if needed.',
+ storage:'Review large downloads and unused apps. Back up important files before deleting.',
+ all:'Test FPS, heat, network and storage separately. Change one thing at a time.'
+ };
+ let extra=sev==='severe'?'\n\nSevere issue: stop gaming if the phone becomes unusually hot. Consider checking battery or hardware health.':'';
+ document.getElementById('lagOutput').innerText='LAG DIAGNOSIS\n\n'+advice[type]+extra;
+}
+
+// FF OPTIMIZER
+function optimizeFF(){
+ let d=ffDevice.value,p=ffPriority.value,h=ffHeat.value;
+ let s=d==='low'?
+ 'Graphics: Smooth\nShadows: Off if available\nHigh FPS: Use a stable officially supported option':
+ d==='mid'?
+ 'Graphics: Smooth or Standard\nHigh FPS: Test the stable supported option':
+ 'Graphics: Standard or higher if stable\nHigh FPS: Highest officially supported stable option';
+ if(p==='fps')s+='\nPriority: Stable frame rate over visuals.';
+ if(p==='balanced')s+='\nPriority: Balance performance and visuals.';
+ if(p==='visual')s+='\nPriority: Increase visual quality gradually.';
+ if(h==='yes')s+='\nHeating: Take cooling breaks and avoid charging during play.';
+ document.getElementById('ffOutput').innerText='YOUR FF PROFILE\n\n'+s+'\n\nRecommendations only. No guaranteed FPS increase.';
+}
+
+// RANK ARENA
+function rankSetup(){
+ let d=rankDevice.value,p=rankProblem.value;
+ let s=d==='low'?'Low-end: Smooth graphics and stable supported FPS.':
+ d==='mid'?'Mid-range: Smooth or Standard graphics; test stability.':
+ 'High-end: Test higher settings without sacrificing stability.';
+ let a={
+ fps:'Avoid heavy effects and test in a normal match.',
+ ping:'Check signal and pause background downloads.',
+ heat:'Take cooling breaks between matches.',
+ all:'Check FPS, temperature and network separately.'
+ };
+ document.getElementById('rankOutput').innerText='BR RANK PLAN\n\n'+s+'\n'+a[p]+'\n\nNo game files are modified.';
+}
+
+// SENSITIVITY LAB
+function makeSensi(){
+ let d=sensiDevice.value,style=sensiStyle.value;
+ let v=d==='low'?[90,85,80,75,50,40]:
+ d==='mid'?[95,90,85,80,55,45]:
+ [100,95,90,85,60,50];
+ if(style==='drag')v=v.map((x,i)=>i<2?Math.min(100,x+5):x);
+ if(style==='steady')v=v.map((x,i)=>i<4?Math.max(40,x-10):x);
+ document.getElementById('sensiOutput').innerText=
+ 'STARTING SENSITIVITY\n\nGeneral: '+v[0]+
+ '\nRed Dot: '+v[1]+'\n2x Scope: '+v[2]+
+ '\n4x Scope: '+v[3]+'\nSniper: '+v[4]+
+ '\nFree Look: '+v[5]+'\n\nTune these values in training mode.';
+}
+
+// OLD PHONE DATABASE
+const devices=[
+ {names:['oppo a31','cph2015'],chip:'Helio P35',ram:'4 GB common',category:'Older budget'},
+ {names:['oppo f17 pro','cph2119'],chip:'Helio P95',ram:'8 GB common',category:'Older mid-range'},
+ {names:['redmi note 8 pro'],chip:'Helio G90T',ram:'6/8 GB variants',category:'Older gaming mid-range'},
+ {names:['realme 6'],chip:'Helio G90T',ram:'4/6/8 GB variants',category:'Older mid-range'},
+ {names:['samsung galaxy a50'],chip:'Exynos 9610',ram:'4/6 GB variants',category:'Older mid-range'},
+ {names:['redmi 9 prime'],chip:'Helio G80',ram:'4 GB common',category:'Older budget'},
+ {names:['redmi note 7'],chip:'Snapdragon 660',ram:'3/4 GB variants',category:'Older budget'},
+ {names:['redmi 8'],chip:'Snapdragon 439',ram:'3/4 GB variants',category:'Older budget'},
+ {names:['realme c3'],chip:'Helio G70',ram:'3/4 GB variants',category:'Older budget'},
+ {names:['samsung galaxy m21'],chip:'Exynos 9611',ram:'4/6 GB variants',category:'Older mid-range'},
+ {names:['redmi note 9'],chip:'Helio G85',ram:'3/4/6 GB variants',category:'Older budget'},
+ {names:['poco m2'],chip:'Helio G80',ram:'6 GB common',category:'Older budget'}
+];
+
+function searchDatabase(){
+ let q=document.getElementById('searchPhone').value.toLowerCase().trim();
+ let matches=devices.filter(d=>d.names.some(n=>n.includes(q))||d.chip.toLowerCase().includes(q));
+ if(!q){databaseOutput.innerText='Enter a phone model or chipset.';return;}
+ if(!matches.length){databaseOutput.innerText='Not found. Enter your device specs manually in Device Scanner.';return;}
+ databaseOutput.innerText=matches.map(d=>
+ 'PHONE: '+d.names[0].toUpperCase()+
+ '\nCHIPSET: '+d.chip+'\nRAM: '+d.ram+
+ '\nCLASS: '+d.category).join('\n\n----------------\n\n');
+}
+
+// PWA INSTALL
+let installPrompt;
+window.addEventListener('beforeinstallprompt',e=>{
+ e.preventDefault();
+ installPrompt=e;
+ document.getElementById('installBtn').style.display='inline-block';
+ document.getElementById('installOutput').innerText='Your Doc! is ready to install.';
+});
+async function installApp(){
+ if(!installPrompt){
+ document.getElementById('installOutput').innerText='Use Chrome menu > Install app or Add to Home Screen if available.';
+ return;
+ }
+ installPrompt.prompt();
+ await installPrompt.userChoice;
+ installPrompt=null;
+}
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+ window.addEventListener('load',()=>{
+ navigator.serviceWorker.register('./sw.js')
+ .catch(e=>console.log('Service worker:',e));
+ });
+}
+
+// LOAD SAVED PROFILE
+window.addEventListener('load',()=>{
+ let saved=localStorage.getItem('yourDocProfile');
+ if(saved){
+ let p=JSON.parse(saved);
+ document.getElementById('profileOutput').innerText=
+ 'Previously saved: '+p.model+' | '+p.chip+' | '+p.ram+' RAM';
+ }
+});
+</script>
+</body>
+</html>

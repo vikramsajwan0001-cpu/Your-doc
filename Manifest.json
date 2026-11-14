@@ -1,0 +1,20 @@
+
+{
+  "name": "Your Doc!",
+  "short_name": "YourDoc",
+  "description": "Smart Gaming and Phone Optimization Assistant",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090909",
+  "theme_color": "#ff6a00",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
